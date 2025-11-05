@@ -374,7 +374,7 @@ export default function Home() {
             © {new Date().getFullYear()} Brijraj Kushwaha. All rights reserved.
           </p>
           <p className="text-gray-500 mt-2 text-sm">
-            Built with Next.js, TailwindCSS, and ❤️
+            Designed by Prakash Kushwaha ❤️
           </p>
         </div>
       </footer>
