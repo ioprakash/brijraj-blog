@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { Calendar, Clock, ArrowLeft, Tag } from 'lucide-react'
 
+// This is a client component, no need for generateStaticParams
+
 interface BlogPost {
   id: string
   title: string

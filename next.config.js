@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
+  // Removed 'output: export' for Vercel deployment with dynamic routes
   images: {
     unoptimized: true,
   },
