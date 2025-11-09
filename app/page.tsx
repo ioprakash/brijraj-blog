@@ -1,5 +1,7 @@
 'use client'
 
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { 
   Mail, 
   MapPin, 
@@ -17,8 +19,21 @@ import {
   User
 } from 'lucide-react'
 
+interface BlogPost {
+  id: string | number
+  title: string
+  excerpt: string
+  content?: string
+  category: string
+  date: string
+  readTime: string
+  published?: boolean
+  image?: string
+}
+
 export default function Home() {
-  const blogPosts = [
+  const router = useRouter()
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>([
     {
       id: 1,
       title: "Digital Transformation in Nepal",
@@ -43,7 +58,21 @@ export default function Home() {
       category: "Content",
       readTime: "6 min read"
     }
-  ]
+  ])
+
+  useEffect(() => {
+    // Load published posts from localStorage
+    if (typeof window !== 'undefined') {
+      const savedPosts = localStorage.getItem('blogPosts')
+      if (savedPosts) {
+        const allPosts: BlogPost[] = JSON.parse(savedPosts)
+        const publishedPosts = allPosts.filter(post => post.published)
+        if (publishedPosts.length > 0) {
+          setBlogPosts(publishedPosts)
+        }
+      }
+    }
+  }, [])
 
   const skills = [
     "Digital Content Creation",
@@ -236,9 +265,19 @@ export default function Home() {
             {blogPosts.map((post) => (
               <article 
                 key={post.id} 
+                onClick={() => router.push(`/blog/${post.id}`)}
                 className="bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow overflow-hidden group cursor-pointer"
               >
-                <div className="h-48 bg-gradient-to-br from-primary-400 to-primary-600 relative overflow-hidden">
+                <div className="h-48 relative overflow-hidden">
+                  {post.image ? (
+                    <img 
+                      src={post.image} 
+                      alt={post.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-gradient-to-br from-primary-400 to-primary-600" />
+                  )}
                   <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-colors" />
                   <div className="absolute bottom-4 left-4">
                     <span className="px-3 py-1 bg-white/90 text-primary-700 rounded-full text-sm font-semibold">
